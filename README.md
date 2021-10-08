@@ -144,3 +144,21 @@ The very same example just pushing to GCR instead of Docker Hub:
 ```bash
 docker run --net=host -it --rm -w /src -v $PWD:/cache -v $PWD:/src -e PLUGIN_REGISTRY=gcr.io -e PLUGIN_REPO=paas-dev1/drone-kaniko-test -e PLUGIN_TAGS=test -e PLUGIN_DOCKERFILE=Dockerfile.test -e PLUGIN_CACHE=true -e PLUGIN_JSON_KEY="$(<$HOME/google-application-credentials.json)" banzaicloud/drone-kaniko
 ```
+
+## Override the check with message `kaniko is being run outside of a container. This can have dangerous effects on your system`
+If for some reason the container stops prematurely because the checks could not complete checking if the kaniko is running inside a container. 
+You can override this check by providing the `force` setting like:
+
+```yaml
+kind: pipeline
+name: default
+
+steps:
+- name: publish
+  image: banzaicloud/drone-kaniko
+  settings:
+    force: true
+    registry: registry.example.com 
+    repo: registry.example.com/example-project
+    ....
+```

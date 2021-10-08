@@ -38,6 +38,10 @@ if [[ "${PLUGIN_SKIP_TLS_VERIFY:-}" == "true" ]]; then
     EXTRA_OPTS="--skip-tls-verify=true"
 fi
 
+if [ -n "${PLUGIN_FORCE:-}" ]; then
+    CACHE_TTL="--force"
+fi
+
 if [[ "${PLUGIN_CACHE:-}" == "true" ]]; then
     CACHE="--cache=true"
 fi
